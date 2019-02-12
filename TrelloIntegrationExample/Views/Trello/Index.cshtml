@@ -1,0 +1,32 @@
+﻿@model TrelloUser
+@{
+    ViewData["Title"] = "Meu Trello";
+}
+
+<div class="container">
+    <div class="row">
+        <img src="@Model.GetAvatar(170)" class="rounded mx-auto d-block" alt="@Model.FullName">
+    </div>
+    <div class="row">
+        <b>Nome:</b> @Model.FullName
+    </div>
+</div>
+
+<div class="container">
+    @foreach (var item in Model.Organizations)
+    {
+        <div class="row ml-1">
+            <b>@item.DisplayName</b>
+        </div>
+        <div class="row ml-3">
+            <div class="container">
+                @foreach (var board in Model.GetBoardsByOrganization(item.Id))
+                {
+                    <div class="row">
+                        @board.Name <a asp-action="DetalhesBoard" asp-route-id="@board.Id"> (Ver Board)</a>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+</div>
